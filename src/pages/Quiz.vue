@@ -28,7 +28,7 @@
           </template>
         </chart-card>
       </div>
-      
+
       <div
         class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-28"
       >
@@ -74,7 +74,7 @@
           </template>
         </stats-card>
       </div>
-      
+
       <div
         class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-50"
       >
@@ -101,18 +101,13 @@
           </md-card-content>
         </md-card>
       </div>
-      <div>
-      </div>
+      <div></div>
     </div>
   </div>
 </template>
 
 <script>
-import {
-  StatsCard,
-  ChartCard,
-  OrderedTable
-} from "@/components";
+import { StatsCard, ChartCard, OrderedTable } from "@/components";
 
 export default {
   components: {
@@ -141,20 +136,20 @@ export default {
           }
         }
       },
-        responsiveOptions: [
-          [
-            "screen and (max-width: 640px)",
-            {
-              seriesBarDistance: 5,
-              axisX: {
-                labelInterpolationFnc: function(value) {
-                  return value[0];
-                }
+      responsiveOptions: [
+        [
+          "screen and (max-width: 640px)",
+          {
+            seriesBarDistance: 5,
+            axisX: {
+              labelInterpolationFnc: function(value) {
+                return value[0];
               }
             }
-          ]
+          }
         ]
-      }
-    }
+      ]
+    };
+  }
 };
 </script>

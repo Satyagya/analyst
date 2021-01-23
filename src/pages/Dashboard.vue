@@ -8,7 +8,7 @@
           :chart-data="dailySalesChart.data"
           :chart-options="dailySalesChart.options"
           :chart-type="'Line'"
-          data-background-color="blue"
+          data-background-color="red"
         >
           <template slot="content">
             <h4 class="title">Weekly User Traffic</h4>
@@ -43,7 +43,7 @@
             <p class="category">
               <span class="text-danger"
                 ><i class="fas fa-long-arrow-alt-down"></i> 32%
-                </span>
+              </span>
               Decrease
             </p>
           </template>
@@ -62,11 +62,11 @@
         <chart-card
           :chart-data="dataCompletedTasksChart.data"
           :chart-options="dataCompletedTasksChart.options"
-          :chart-type="'Line'"
-          data-background-color="green"
+          :chart-type="'Pie'"
+          data-background-color="red"
         >
           <template slot="content">
-            <h4 class="title">Active Users</h4>
+            <h4 class="title">Current Traffic</h4>
             <!-- <p class="category">
               Last Campaign Performance
             </p> -->
@@ -83,7 +83,7 @@
       <div
         class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-33"
       >
-        <stats-card data-background-color="green">
+        <stats-card data-background-color="orange">
           <template slot="header">
             <md-icon>store</md-icon>
           </template>
@@ -128,7 +128,7 @@
       <div
         class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-33"
       >
-        <stats-card data-background-color="red">
+        <stats-card data-background-color="orange">
           <template slot="header">
             <md-icon>info_outline</md-icon>
           </template>
@@ -171,7 +171,7 @@
         class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-50"
       >
         <md-card>
-          <md-card-header data-background-color="orange">
+          <md-card-header data-background-color="green">
             <h4 class="title">User Stats</h4>
             <p class="category">User stats for today.</p>
           </md-card-header>
@@ -206,6 +206,10 @@
         </nav-tabs-card>
       </div>
     </div>
+    <div class="container">
+      <PieChart :chart-data="datacollection"></PieChart>
+      <button @click="fillData()">Randomize</button>
+    </div>
   </div>
 </template>
 
@@ -217,6 +221,7 @@ import {
   NavTabsTable,
   OrderedTable
 } from "@/components";
+import PieChart from "@/components/PieChart.js";
 
 export default {
   components: {
@@ -224,10 +229,15 @@ export default {
     ChartCard,
     NavTabsCard,
     NavTabsTable,
-    OrderedTable
+    OrderedTable,
+    PieChart
+  },
+  mounted() {
+    this.fillData();
   },
   data() {
     return {
+      datacollection: null,
       dailySalesChart: {
         data: {
           labels: ["M", "T", "W", "T", "F", "S", "S"],
@@ -313,6 +323,28 @@ export default {
         ]
       }
     };
+  },
+  methods: {
+    fillData() {
+      this.datacollection = {
+        labels: [this.getRandomInt(), this.getRandomInt()],
+        datasets: [
+          {
+            label: "Data One",
+            backgroundColor: "#f87979",
+            data: [this.getRandomInt(), this.getRandomInt()]
+          },
+          {
+            label: "Data One",
+            backgroundColor: "#f87979",
+            data: [this.getRandomInt(), this.getRandomInt()]
+          }
+        ]
+      };
+    },
+    getRandomInt() {
+      return Math.floor(Math.random() * (50 - 5 + 1)) + 5;
+    }
   }
 };
 </script>

@@ -62,8 +62,11 @@
               <md-input v-model="code" type="number"></md-input>
             </md-field>
           </div>
-          <div class="md-layout-item md-size-100 text-right" >
-            <md-button class="md-raised md-success" style="background-color: #f44336!important;">Update Admin Profile</md-button
+          <div class="md-layout-item md-size-100 text-right">
+            <md-button
+              class="md-raised md-success"
+              style="background-color: #f44336!important;"
+              >Update Admin Profile</md-button
             >
           </div>
         </div>
@@ -95,6 +98,4 @@ export default {
   }
 };
 </script>
-<style>
-
-</style>
+<style></style>
