@@ -4,7 +4,7 @@
 
     <div class="md-layout">
       <div
-        class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-30"
+        class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-20"
       >
         <stats-card data-background-color="green">
           <template slot="header">
@@ -29,7 +29,32 @@
         </stats-card>
       </div>
       <div
-        class="md-layout-item md-medium-size-200 md-xsmall-size-200 md-size-70"
+        class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25"
+      >
+        <stats-card data-background-color="green">
+          <template slot="header">
+            <md-icon>Q</md-icon>
+          </template>
+
+          <template slot="content">
+            <p class="category">Currently Active Quizzes</p>
+            <h3 class="title">
+              {{ quizCount }}
+            </h3>
+          </template>
+
+          <template slot="footer">
+            <div class="stats">
+              <md-icon>date_range</md-icon>
+              Just Now
+              <!-- <md-icon class="text-danger">warning</md-icon>
+              <a href="#pablo">Update Requeired</a> -->
+            </div>
+          </template>
+        </stats-card>
+      </div>
+      <div
+        class="md-layout-item md-medium-size-200 md-xsmall-size-200 md-size-55"
       >
         <chart-card
           :chart-data="processedData"
@@ -55,12 +80,13 @@
           </template>
         </chart-card>
       </div>
+
       <div
         class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-100"
       >
         <md-card>
           <md-card-header data-background-color="green">
-            <h4 class="title">Page Visits</h4>
+            <h4 class="title">Quiz</h4>
             <p class="category">Details</p>
           </md-card-header>
           <md-card-content>
@@ -138,6 +164,7 @@ export default {
     return {
       time: 1,
       totalActiveUsers: 0,
+      quizCount: 10,
       channelID: 2,
       originalData: [],
       filteredData: [],
@@ -210,7 +237,6 @@ export default {
       fetch(`${this.$store.state.COMMON_INFRA_SERVER}user/getLoginHistory`)
         .then(response => response.json())
         .then(result => {
-          //console.log(result);
           this.originalData = result.filter(
             obj => obj.channelId == this.channelID
           );
@@ -229,6 +255,16 @@ export default {
           }
 
           this.processedData.series = [[...tempData]];
+        })
+        .catch(error => console.log);
+    },
+    getTotalActiveQuiz() {
+      //totalActiveUsers
+      fetch(`${this.$store.state.QUIZ_SERVER2}quizbay/contest/getactivecount`)
+        .then(response => response.json())
+        .then(result => {
+          console.log(result);
+          this.quizCount = result;
         })
         .catch(error => console.log);
     },
@@ -260,6 +296,7 @@ export default {
     //TODO: fetch request from the apis then populate
     this.getDataFromAPI();
     this.getTotalActiveUsers();
+    this.getTotalActiveQuiz();
     //this.dailySalesChart.options.high =
   }
 };

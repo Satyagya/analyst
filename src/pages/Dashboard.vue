@@ -250,6 +250,7 @@ export default {
   },
   mounted() {
     this.fillData();
+    //this.renderChart(this.pbchart, this.quizchart, this.quorachart)
   },
   data() {
     return {
@@ -259,9 +260,9 @@ export default {
       totalActiveUsers3: 10,
       totalActiveUsers4: 0,
 
-      pbchart: 1,
+      pbchart: 2,
       quorachart: 2,
-      quizchart: 1,
+      quizchart: 2,
 
       datacollection: null,
       dailySalesChart: {
@@ -366,41 +367,41 @@ export default {
     getRandomInt() {
       return Math.floor(Math.random() * (50 - 5 + 1)) + 5;
     },
-    getTotalActiveUsersInPb() {
-      //totalActiveUsers
-      fetch(`${this.$store.state.ANALYTICS_SERVER}analytics/count/0`)
-        .then(response => response.json())
-        .then(result => {
-          console.log(result);
-          this.pbchart = result;
-          return pbchart;
-        })
-        .catch(error => console.log);
-    },
-    getTotalActiveUsersInQuora() {
-      //totalActiveUsers
-      fetch(`${this.$store.state.ANALYTICS_SERVER}analytics/count/1`)
-        .then(response => response.json())
-        .then(result => {
-          console.log(result);
-          this.quorachart = result;
-          return quorachart;
-        })
-        .catch(error => console.log);
-      // return (result);
-    },
-    getTotalActiveUsersInQuiz() {
-      //totalActiveUsers
-      fetch(`${this.$store.state.ANALYTICS_SERVER}analytics/count/2`)
-        .then(response => response.json())
-        .then(result => {
-          console.log(result);
-          this.quizchart = result;
-          return quizchart;
-        })
-        .catch(error => console.log);
-      // return (result);
-    },
+    // getTotalActiveUsersInPb() {
+    //   //totalActiveUsers
+    //   fetch(`${this.$store.state.ANALYTICS_SERVER}analytics/count/0`)
+    //     .then(response => response.json())
+    //     .then(result => {
+    //       console.log(result);
+    //       this.pbchart = result;
+    //       return pbchart;
+    //     })
+    //     .catch(error => console.log);
+    // },
+    // getTotalActiveUsersInQuora() {
+    //   //totalActiveUsers
+    //   fetch(`${this.$store.state.ANALYTICS_SERVER}analytics/count/1`)
+    //     .then(response => response.json())
+    //     .then(result => {
+    //       console.log(result);
+    //       this.quorachart = result;
+    //       return quorachart;
+    //     })
+    //     .catch(error => console.log);
+    //   // return (result);
+    // },
+    // getTotalActiveUsersInQuiz() {
+    //   //totalActiveUsers
+    //   fetch(`${this.$store.state.ANALYTICS_SERVER}analytics/count/2`)
+    //     .then(response => response.json())
+    //     .then(result => {
+    //       console.log(result);
+    //       this.quizchart = result;
+    //       return quizchart;
+    //     })
+    //     .catch(error => console.log);
+    //   // return (result);
+    // },
 
     getDataFromAPI() {
       fetch(
@@ -437,6 +438,8 @@ export default {
         .then(result => {
           console.log(result);
           this.totalActiveUsers1 = result;
+          this.pbchart = result;
+          //console.log("pbchart "+this.pbchart);
           this.totalActiveUsers = this.totalActiveUsers1;
           this.totalActiveUsers4 = Math.max(
             this.totalActiveUsers4,
@@ -450,6 +453,7 @@ export default {
         .then(result => {
           console.log(result);
           this.totalActiveUsers2 = result;
+          this.quorachart = result;
           this.totalActiveUsers += this.totalActiveUsers2;
           this.totalActiveUsers4 = Math.max(
             this.totalActiveUsers4,
@@ -463,6 +467,7 @@ export default {
         .then(result => {
           console.log(result);
           this.totalActiveUsers3 = result;
+          this.quizchart = result;
           this.totalActiveUsers += this.totalActiveUsers3;
           this.totalActiveUsers4 = Math.max(
             this.totalActiveUsers4,
@@ -478,10 +483,10 @@ export default {
   beforeMount() {
     this.getDataFromAPI();
     this.getTotalActiveUsers();
-    this.getTotalActiveUsersInPb(),
-      this.getTotalActiveUsersInQuora(),
-      this.getTotalActiveUsersInQuiz(),
-      this.fillData();
+    // this.getTotalActiveUsersInPb(),
+    // this.getTotalActiveUsersInQuora(),
+    // this.getTotalActiveUsersInQuiz(),
+    this.fillData();
   }
 };
 </script>
