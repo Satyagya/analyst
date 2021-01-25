@@ -1,10 +1,35 @@
 <template>
   <div class="content">
     <!-- <md-h1>Filters:</md-h1> -->
-    
+
     <div class="md-layout">
       <div
-        class="md-layout-item md-medium-size-200 md-xsmall-size-200 md-size-50"
+        class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-30"
+      >
+        <stats-card data-background-color="green">
+          <template slot="header">
+            <md-icon>AT</md-icon>
+          </template>
+
+          <template slot="content">
+            <p class="category">Total Active traffic</p>
+            <h3 class="title">
+              {{ totalActiveUsers }}
+            </h3>
+          </template>
+
+          <template slot="footer">
+            <div class="stats">
+              <md-icon>date_range</md-icon>
+              Just Now
+              <!-- <md-icon class="text-danger">warning</md-icon>
+              <a href="#pablo">Update Requeired</a> -->
+            </div>
+          </template>
+        </stats-card>
+      </div>
+      <div
+        class="md-layout-item md-medium-size-200 md-xsmall-size-200 md-size-70"
       >
         <chart-card
           :chart-data="processedData"
@@ -31,7 +56,7 @@
         </chart-card>
       </div>
       <div
-        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-50"
+        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-100"
       >
         <md-card>
           <md-card-header data-background-color="green">
@@ -49,43 +74,18 @@
       >
         <stats-card data-background-color="green">
           <template slot="header">
-            <md-icon>AT</md-icon>
-          </template>
-
-          <template slot="content">
-            <p class="category">Total Active traffic</p>
-            <h3 class="title">
-              {{ totalActiveUsers }}
-            </h3>
-          </template>
-
-          <template slot="footer">
-            <div class="stats">
-              <md-icon>date_range</md-icon>
-              Just Now
-              <!-- <md-icon class="text-danger">warning</md-icon>
-              <a href="#pablo">Update Requeired</a> -->
-            </div>
-          </template>
-        </stats-card>
-      </div>
-      <div
-        class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-28"
-      >
-        <stats-card data-background-color="green">
-          <template slot="header">
             <md-icon>store</md-icon>
           </template>
 
           <template slot="content">
             <p class="category">Total Registered Users</p>
-            <h3 class="title"> {{ filteredData.length }} </h3>
+            <h3 class="title">{{ filteredData.length }}</h3>
           </template>
 
           <template slot="footer">
             <div class="stats">
               <md-icon>date_range</md-icon>
-              Data for the last {{time}} days
+              Data for the last {{ time }} days
             </div>
           </template>
         </stats-card>
@@ -100,20 +100,23 @@
             <p class="category">User Details</p>
           </md-card-header>
           <md-card-content>
-            <ordered-table  :tableData="filteredData" table-header-color="red"></ordered-table>
+            <ordered-table
+              :channelID="channelID"
+              table-header-color="red"
+            ></ordered-table>
           </md-card-content>
         </md-card>
       </div>
       <div class="dropdown">
-      <button class="dropbtn">Time-Filter</button>
-      <div class="dropdown-content">
-        <md-button @click="fetchData(7)">1 Week</md-button>
-        <md-button @click="fetchData(14)">2 Weeks</md-button>
-        <md-button @click="fetchData(21)">3 Weeks</md-button>
-        <md-button @click="fetchData(31)">1 Month</md-button>
-        <md-button @click="fetchData(180)">6 Month</md-button>
+        <button class="dropbtn">Time-Filter</button>
+        <div class="dropdown-content">
+          <md-button @click="fetchData(7)">1 Week</md-button>
+          <md-button @click="fetchData(14)">2 Weeks</md-button>
+          <md-button @click="fetchData(21)">3 Weeks</md-button>
+          <md-button @click="fetchData(31)">1 Month</md-button>
+          <md-button @click="fetchData(180)">6 Month</md-button>
+        </div>
       </div>
-    </div>
       <div></div>
     </div>
   </div>
@@ -121,7 +124,7 @@
 
 <script>
 import { StatsCard, ChartCard, OrderedTable } from "@/components";
-import QuizTable from '../components/Tables/QuizTable.vue';
+import QuizTable from "../components/Tables/QuizTable.vue";
 
 export default {
   components: {
@@ -131,7 +134,7 @@ export default {
     QuizTable
   },
 
-      data() {
+  data() {
     return {
       time: 1,
       totalActiveUsers: 0,
@@ -139,8 +142,15 @@ export default {
       originalData: [],
       filteredData: [],
       processedData: {
-        labels: ["2017-11-13","2017-11-06","2017-10-02","2017-11-03","2017-10-01","2017-10-01"],//dummy data
-        series: [[124, 33, 66,99,23,40]]
+        labels: [
+          "2017-11-13",
+          "2017-11-06",
+          "2017-10-02",
+          "2017-11-03",
+          "2017-10-01",
+          "2017-10-01"
+        ], //dummy data
+        series: [[124, 33, 66, 99, 23, 40]]
       },
       dailySalesChart: {
         data: {
@@ -200,15 +210,20 @@ export default {
       fetch(`${this.$store.state.COMMON_INFRA_SERVER}user/getLoginHistory`)
         .then(response => response.json())
         .then(result => {
-          this.originalData = result.filter(obj => obj.channelID == this.channelID);
-          let dateData = this.groupWeek(this.originalData), tempData=[];
+          //console.log(result);
+          this.originalData = result.filter(
+            obj => obj.channelId == this.channelID
+          );
           this.filteredData = [...this.originalData];
+          console.log("filtereddata", this.filteredData);
+          let dateData = this.groupWeek(this.originalData),
+            tempData = [];
           this.processedData = {
             labels: [],
             series: []
-          }
+          };
 
-          for(let i=0;i<dataData.length;i++){
+          for (let i = 0; i < dataData.length; i++) {
             this.processedData.labels.push(dataData[i]["timeStamp"]);
             tempData.push(dataData[i]["count"]);
           }
@@ -217,36 +232,35 @@ export default {
         })
         .catch(error => console.log);
     },
-    getTotalActiveUsers(){
-
+    getTotalActiveUsers() {
       //totalActiveUsers
-      fetch(`${this.$store.state.COMMON_INFRA_SERVER}`)
+      fetch(`${this.$store.state.ANALYTICS_SERVER}analytics/count/2`)
         .then(response => response.json())
         .then(result => {
           console.log(result);
-          this.totalActiveUsers = result.count;
+          this.totalActiveUsers = result;
         })
         .catch(error => console.log);
     },
-    getDayDifference(pastDate){
+    getDayDifference(pastDate) {
       let pastTime = new Date(pastDate);
       let presentTime = new Date();
-      return ((pastTime.getTime()-presentTime.getTime())/(1000*3600*24));
+      return (pastTime.getTime() - presentTime.getTime()) / (1000 * 3600 * 24);
     },
     filter(time) {
       //TODO: filter the list based time
       this.filteredData = this.originalData.filter(obj => {
-          if (this.getDayDifference(obj.timeStamp) < time){
-            return obj;
-          }
+        if (this.getDayDifference(obj.timeStamp) < time) {
+          return obj;
+        }
       });
     }
   },
   beforeMount() {
     //TODO: fetch request from the apis then populate
-    //this.getDataFromAPI();
-    //this.getTotalActiveUsers();
-    //this.dailySalesChart.options.high = 
+    this.getDataFromAPI();
+    this.getTotalActiveUsers();
+    //this.dailySalesChart.options.high =
   }
 };
 </script>

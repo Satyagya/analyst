@@ -2,7 +2,7 @@
   <div class="content">
     <div class="md-layout">
       <div
-        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-40"
+        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-50"
       >
         <chart-card
           :chart-data="dailySalesChart.data"
@@ -29,7 +29,7 @@
         </chart-card>
       </div>
       <div
-        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-40"
+        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-50"
       >
         <chart-card
           :chart-data="emailsSubscriptionChart.data"
@@ -56,30 +56,7 @@
           </template>
         </chart-card>
       </div>
-      <div
-        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-19"
-      >
-        <!-- <chart-card
-          :chart-data="dataCompletedTasksChart.data"
-          :chart-options="dataCompletedTasksChart.options"
-          :chart-type="'Pie'"
-          data-background-color="red"
-        >
-          <template slot="content">
-            <h4 class="title">Current Traffic</h4>
-            
-          </template>
 
-          <template slot="footer">
-            <div class="stats">
-              <md-icon>access_time</md-icon>
-              campaign sent 26 minutes ago
-            </div>
-          </template>
-        </chart-card> -->
-        <md-h1>Active users</md-h1>
-        <PieChart :chart-data="datacollection"></PieChart>
-      </div>
       <div
         class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-33"
       >
@@ -89,14 +66,16 @@
           </template>
 
           <template slot="content">
-            <p class="category">Active Users</p>
-            <h3 class="title">4245</h3>
+            <p class="category">Active Users------(All three services)</p>
+            <h3 class="title">
+              {{ totalActiveUsers }}
+            </h3>
           </template>
 
           <template slot="footer">
             <div class="stats">
-              <md-icon>date_range</md-icon>
-              Last 24 Hours
+              <md-icon class="text-danger">warning</md-icon>
+              <a href="#pablo">Update Requeired</a>
             </div>
           </template>
         </stats-card>
@@ -112,15 +91,15 @@
           <template slot="content">
             <p class="category">Highest traffic</p>
             <h3 class="title">
-              49
+              {{ totalActiveUsers4 }}
               <small>K</small>
             </h3>
           </template>
 
           <template slot="footer">
             <div class="stats">
-              <md-icon class="text-danger">warning</md-icon>
-              <a href="#pablo">Update Requeired</a>
+              <md-icon>date_range</md-icon>
+              Just Now
             </div>
           </template>
         </stats-card>
@@ -168,20 +147,7 @@
         </stats-card>
       </div> -->
       <div
-        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-50"
-      >
-        <md-card>
-          <md-card-header data-background-color="green">
-            <h4 class="title">User Stats</h4>
-            <p class="category">User stats for today.</p>
-          </md-card-header>
-          <md-card-content>
-            <ordered-table table-header-color="orange"></ordered-table>
-          </md-card-content>
-        </md-card>
-      </div>
-      <div
-        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-50"
+        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-70"
       >
         <nav-tabs-card>
           <template slot="content">
@@ -204,6 +170,56 @@
             </md-tabs>
           </template>
         </nav-tabs-card>
+      </div>
+
+      <div class="md-layout-item md-medium-size- md-xsmall-size- md-size-25">
+        <!-- dont change md-size again -->
+
+        <!-- <chart-card
+          :chart-data="dataCompletedTasksChart.data"
+          :chart-options="dataCompletedTasksChart.options"
+          :chart-type="'Pie'"
+          data-background-color="red"
+        >
+          <template slot="content">
+            <h4 class="title">Current Traffic</h4>
+            
+          </template>
+
+          <template slot="footer">
+            <div class="stats">
+              <md-icon>access_time</md-icon>
+              campaign sent 26 minutes ago
+            </div>
+          </template>
+        </chart-card> -->
+        <md-h1>Active users</md-h1>
+        <PieChart :chart-data="datacollection"></PieChart>
+      </div>
+
+      <div
+        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-100"
+      >
+        <md-card>
+          <md-card-header data-background-color="green">
+            <h4 class="title">User Stats</h4>
+            <p class="category">User stats for today.</p>
+          </md-card-header>
+          <md-card-content>
+            <ordered-table
+              :channelID="0"
+              table-header-color="red"
+            ></ordered-table>
+            <ordered-table
+              :channelID="1"
+              table-header-color="red"
+            ></ordered-table>
+            <ordered-table
+              :channelID="2"
+              table-header-color="red"
+            ></ordered-table>
+          </md-card-content>
+        </md-card>
       </div>
     </div>
     <!-- <div class="container">
@@ -237,6 +253,16 @@ export default {
   },
   data() {
     return {
+      totalActiveUsers: 10,
+      totalActiveUsers1: 10,
+      totalActiveUsers2: 10,
+      totalActiveUsers3: 10,
+      totalActiveUsers4: 0,
+
+      pbchart: 1,
+      quorachart: 2,
+      quizchart: 1,
+
       datacollection: null,
       dailySalesChart: {
         data: {
@@ -332,18 +358,130 @@ export default {
           {
             label: "Data One",
             backgroundColor: ["#03a9f4", "#4caf50", "#ff9800"],
-            data: [
-              this.getRandomInt(),
-              this.getRandomInt(),
-              this.getRandomInt()
-            ]
+            data: [this.pbchart, this.quizchart, this.quorachart]
           }
         ]
       };
     },
     getRandomInt() {
       return Math.floor(Math.random() * (50 - 5 + 1)) + 5;
+    },
+    getTotalActiveUsersInPb() {
+      //totalActiveUsers
+      fetch(`${this.$store.state.ANALYTICS_SERVER}analytics/count/0`)
+        .then(response => response.json())
+        .then(result => {
+          console.log(result);
+          this.pbchart = result;
+          return pbchart;
+        })
+        .catch(error => console.log);
+    },
+    getTotalActiveUsersInQuora() {
+      //totalActiveUsers
+      fetch(`${this.$store.state.ANALYTICS_SERVER}analytics/count/1`)
+        .then(response => response.json())
+        .then(result => {
+          console.log(result);
+          this.quorachart = result;
+          return quorachart;
+        })
+        .catch(error => console.log);
+      // return (result);
+    },
+    getTotalActiveUsersInQuiz() {
+      //totalActiveUsers
+      fetch(`${this.$store.state.ANALYTICS_SERVER}analytics/count/2`)
+        .then(response => response.json())
+        .then(result => {
+          console.log(result);
+          this.quizchart = result;
+          return quizchart;
+        })
+        .catch(error => console.log);
+      // return (result);
+    },
+
+    getDataFromAPI() {
+      fetch(
+        `${this.$store.state.COMMON_INFRA_SERVER}history/getRegistrationHistory`
+      )
+        .then(response => response.json())
+        .then(result => {
+          //console.log(result);
+          this.originalData = result.filter(
+            obj => obj.channelId == this.channelID
+          );
+          this.filteredData = [...this.originalData];
+          let dateData = this.groupWeek(this.originalData),
+            tempData = [];
+          console.log("groupWeek", dataData);
+          this.processedData = {
+            labels: [],
+            series: []
+          };
+
+          for (let i = 0; i < dataData.length; i++) {
+            this.processedData.labels.push(dataData[i]["timeStamp"]);
+            tempData.push(dataData[i]["count"]);
+          }
+
+          this.processedData.series = [[...tempData]];
+        })
+        .catch(error => console.log);
+    },
+
+    getTotalActiveUsers() {
+      fetch(`${this.$store.state.ANALYTICS_SERVER}analytics/count/0`)
+        .then(response => response.json())
+        .then(result => {
+          console.log(result);
+          this.totalActiveUsers1 = result;
+          this.totalActiveUsers = this.totalActiveUsers1;
+          this.totalActiveUsers4 = Math.max(
+            this.totalActiveUsers4,
+            this.totalActiveUsers1
+          );
+        })
+        .catch(error => console.log);
+
+      fetch(`${this.$store.state.ANALYTICS_SERVER}analytics/count/1`)
+        .then(response => response.json())
+        .then(result => {
+          console.log(result);
+          this.totalActiveUsers2 = result;
+          this.totalActiveUsers += this.totalActiveUsers2;
+          this.totalActiveUsers4 = Math.max(
+            this.totalActiveUsers4,
+            this.totalActiveUsers2
+          );
+        })
+        .catch(error => console.log);
+
+      fetch(`${this.$store.state.ANALYTICS_SERVER}analytics/count/2`)
+        .then(response => response.json())
+        .then(result => {
+          console.log(result);
+          this.totalActiveUsers3 = result;
+          this.totalActiveUsers += this.totalActiveUsers3;
+          this.totalActiveUsers4 = Math.max(
+            this.totalActiveUsers4,
+            this.totalActiveUsers3
+          );
+        })
+        .catch(error => console.log);
+
+      //this.totalActiveUsers=this.totalActiveUsers1+this.totalActiveUsers2+this.totalActiveUsers3;
+      //this.totalActiveUsers4= Math.max(this.totalActiveUsers1,this.totalActiveUsers2,this.totalActiveUsers3);
     }
+  },
+  beforeMount() {
+    this.getDataFromAPI();
+    this.getTotalActiveUsers();
+    this.getTotalActiveUsersInPb(),
+      this.getTotalActiveUsersInQuora(),
+      this.getTotalActiveUsersInQuiz(),
+      this.fillData();
   }
 };
 </script>

@@ -30,8 +30,8 @@
                 </div>
                 <div class="md-layout-item md-small-size-100 md-size-100">
                   <md-field>
-                    <label>Merchant User Name</label>
-                    <md-input v-model="duname" type="text"></md-input>
+                    <label>Admin Name</label>
+                    <md-input v-model="username" type="text"></md-input>
                   </md-field>
                 </div>
                 <div class="md-layout-item md-small-size-100 md-size-100">
@@ -76,7 +76,7 @@
 export default {
   name: "register",
   data: () => ({
-    duname: null,
+    username: null,
     password: null,
     cpassword: null,
     error: false,
@@ -89,7 +89,7 @@ export default {
     },
     register() {
       this.buttonDisable = true;
-      if (!this.duname || !this.password || !this.cpassword) {
+      if (!this.username || !this.password || !this.cpassword) {
         this.errorMsg = "Something is Missing !!!";
         this.error = true;
         this.buttonDisable = false;
@@ -103,16 +103,16 @@ export default {
         return;
       }
 
-      let postRequestObj = { ...postRequestData };
+      let postRequestObj = { ...this.$store.state.postRequestData };
       postRequestObj.body = JSON.stringify({
-        distributorName: this.duname,
+        username: this.username,
         password: this.password
       });
 
-      fetch(`${SERVER_URL}dist/add`, postRequestObj)
+      fetch(`${this.$store.state.SERVER_URL}analytics/adminReg`, postRequestObj)
         .then(response => response.text())
         .then(result => {
-          console.log(result);
+          //console.log(result);
           this.onClickToNavigate("Login");
         })
         .catch(error => {

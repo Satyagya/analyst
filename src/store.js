@@ -9,12 +9,9 @@ const Store = new Vuex.Store({
     dtoken: null,
     userProfile: null,
     isLoggedIn: false,
-    SERVER_URL: "http://10.177.1.149:8003/",
-    CART_SERVER: "http://10.177.1.134:8002/",
-    SEARCH_SERVER: "http://10.177.1.144:8000/",
-    USER_SERVER: "http://10.177.1.144:8001/",
-    PRODUCT_SERVER: "http://10.177.1.118:6969/",
-    COMMON_INFRA_SERVER: "http://localhost:8000/",
+    SERVER_URL: "http://10.177.1.95:8091/",
+    ANALYTICS_SERVER: "http://10.177.1.164:8080/",
+    COMMON_INFRA_SERVER: "http://10.177.1.51:8085/",
     postRequestData: {
       method: "POST",
       mode: "cors",
@@ -25,7 +22,8 @@ const Store = new Vuex.Store({
       body: null
     },
     didCookieName: "DID",
-    dtokenCookieName: "DTOKEN"
+    dtokenCookieName: "DTOKEN",
+    cookieToken: "COOKIE_TOKEN"
   },
   mutations: {
     setLoggedIn(state, newDID, newDToken) {

@@ -13,7 +13,12 @@
         data overload in your database. You can run, debug, or hide your code,
         but the EVIL TESTER will find your errors.. and make you pay for them.
       </p>
-      <md-button class="md-round md-danger">Logout</md-button>
+      <md-button
+        class="md-round md-danger"
+        v-on:click="logout()"
+        v-bind:disabled="buttonDisable"
+        >Logout</md-button
+      >
     </md-card-content>
   </md-card>
 </template>
@@ -24,6 +29,15 @@ export default {
     cardUserImage: {
       type: String,
       default: require("@/assets/img/faces/phani.jpeg")
+    }
+  },
+  methods: {
+    logout() {
+      this.$store.commit("setLogout");
+      this.$cookies.remove(this.$store.state.didCookieName);
+      this.$cookies.remove(this.$store.state.dtokenCookieName);
+      this.$cookies.remove(this.$store.state.cookieToken);
+      this.$router.push({ name: "Login" });
     }
   },
   data() {

@@ -1,11 +1,19 @@
 <template>
   <div>
-    <md-table v-model="tableData" :table-header-color="tableHeaderColor">
-      <md-table-row slot="md-table-row" slot-scope="{ item }" :key="item.userId">
-        <md-table-cell md-label="ID">{{ item.userId }}</md-table-cell>
-        <md-table-cell md-label="Name">{{ item.username }}</md-table-cell>
+    <md-table v-model="originalData" :table-header-color="tableHeaderColor">
+      <md-table-row
+        slot="md-table-row"
+        slot-scope="{ item }"
+        :key="item.userId"
+      >
+        <md-table-cell md-label="ChannelID">{{ item.channelId }}</md-table-cell>
+        <md-table-cell md-label="UserID">{{ item.userId }}</md-table-cell>
+        <md-table-cell md-label="Name">{{ item.userName }}</md-table-cell>
+        <md-table-cell md-label="Email">{{ item.email }}</md-table-cell>
         <md-table-cell md-label="Timestamp">{{ item.timestamp }}</md-table-cell>
-        <md-table-cell md-label="Area of Interest">{{ item.areaOfInterests }}</md-table-cell>
+        <md-table-cell md-label="Area of Interest">{{
+          item.areaOfInterests
+        }}</md-table-cell>
       </md-table-row>
     </md-table>
   </div>
@@ -19,21 +27,12 @@ export default {
       type: String,
       default: ""
     },
-    tableData: {
-      type: Array,
-      default: function () {
-        return [{
-          userId: "Random_id",
-          username: "randomeID",
-          timestamp: "26-12-2020",
-          areaOfInterests: "Desi Daru"
-        }]
-      }
-    }
+    channelID: Number
   },
   data() {
     return {
       selected: [],
+      originalData: [],
       users: [
         {
           id: 1,
@@ -65,6 +64,24 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    getDataFromAPI() {
+      fetch(
+        `${this.$store.state.COMMON_INFRA_SERVER}history/getRegistrationHistory`
+      )
+        .then(response => response.json())
+        .then(result => {
+          //console.log(result);
+          this.originalData = result.filter(
+            obj => obj.channelId == this.channelID
+          );
+        })
+        .catch(error => console.log);
+    }
+  },
+  mounted() {
+    this.getDataFromAPI();
   }
 };
 </script>

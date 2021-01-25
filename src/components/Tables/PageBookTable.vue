@@ -3,9 +3,9 @@
     <md-table v-model="users" :table-header-color="tableHeaderColor">
       <md-table-row slot="md-table-row" slot-scope="{ item }">
         <md-table-cell md-label="ID">{{ item.userId }}</md-table-cell>
-        <md-table-cell md-label="Name">{{ item.username }}</md-table-cell>
-        <md-table-cell md-label="Timestamp">{{ item.timestamp }}</md-table-cell>
-        <md-table-cell md-label="Area of Interest">{{ item.areaOfInterests }}</md-table-cell>
+        <md-table-cell md-label="Page Topic">{{ item.category }}</md-table-cell>
+        <md-table-cell md-label="Views">{{ item.views }}</md-table-cell>
+        <md-table-cell md-label="follows">{{ item.follows }}</md-table-cell>
       </md-table-row>
     </md-table>
   </div>
@@ -25,46 +25,73 @@ export default {
       selected: [],
       users: [
         {
-          id: 1,
-          name: "Dakota Rice",
-          salary: "$36,738",
-          country: "Niger",
-          city: "Oud-Turnhout"
+          userId: 1,
+          category: "fashion",
+          views: 256,
+          follows: 32
         },
         {
-          id: 2,
-          name: "Minerva Hooper",
-          salary: "$23,738",
-          country: "Curaçao",
-          city: "Sinaai-Waas"
+          userId: 1,
+          category: "fashion",
+          views: 256,
+          follows: 32
         },
         {
-          id: 3,
-          name: "Sage Rodriguez",
-          salary: "$56,142",
-          country: "Netherlands",
-          city: "Overland Park"
+          userId: 1,
+          category: "fashion",
+          views: 256,
+          follows: 32
         },
         {
-          id: 4,
-          name: "Philip Chaney",
-          salary: "$38,735",
-          country: "Korea, South",
-          city: "Gloucester"
+          userId: 1,
+          category: "fashion",
+          views: 256,
+          follows: 32
+        },
+        {
+          userId: 1,
+          category: "fashion",
+          views: 256,
+          follows: 32
+        },
+        {
+          userId: 1,
+          category: "fashion",
+          views: 256,
+          follows: 32
+        },
+        {
+          userId: 1,
+          category: "fashion",
+          views: 256,
+          follows: 32
+        },
+        {
+          userId: 1,
+          category: "fashion",
+          views: 256,
+          follows: 32
+        },
+        {
+          userId: 1,
+          category: "fashion",
+          views: 256,
+          follows: 32
         }
       ]
     };
   },
   //inside () link
-  beforeMount(){
+  beforeMount() {
     //TODO: hit fetch request before mount for data of the table
-    fetch(`${this.$store.state.COMMON_INFRA_SERVER}`)
-        .then(response => response.json())
-        .then(result => {
-          console.log(result);
-          this.users = result;
-        })
-        .catch(error => console.log);
+    //TODO: finish getting the data apilink is fine
+    fetch(`${this.$store.state.ANALYTICS_SERVER}analytics/list/0`)
+      .then(response => response.json())
+      .then(result => {
+        console.log(result);
+        this.users = result;
+      })
+      .catch(error => console.log);
   }
 };
 </script>

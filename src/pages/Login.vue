@@ -33,7 +33,7 @@
                 <div class="md-layout-item md-size-100">
                   <md-field>
                     <label>Admin User Name</label>
-                    <md-input v-model="duname" type="text"></md-input>
+                    <md-input v-model="username" type="text"></md-input>
                   </md-field>
                 </div>
                 <div class="md-layout-item md-size-100">
@@ -73,6 +73,7 @@ export default {
   name: "login",
   data: () => ({
     duname: null,
+    username: null,
     password: null,
     error: false,
     errorMsg: null,
@@ -81,14 +82,12 @@ export default {
   beforeMount() {
     if (
       this.$store.state.isLoggedIn ||
-      (this.$cookies.isKey(didCookieName) &&
-        this.$cookies.isKey(dtokenCookieName))
+      this.$cookies.isKey(this.$store.state.cookieToken)
     ) {
       if (!this.$store.state.isLoggedIn) {
         this.$store.commit(
           "setLoggedIn",
-          this.$cookies.get(didCookieName),
-          this.$cookies.get(dtokenCookieName)
+          this.$cookies.get(this.$store.state.cookieToken)
         );
       }
       this.$router.push({ name: "Dashboard" });
@@ -100,28 +99,33 @@ export default {
     },
     login() {
       this.buttonDisable = true;
-      if (!this.password || !this.duname) {
+      if (!this.password || !this.username) {
         this.errorMsg = "Something is Missing !!!";
         this.error = true;
         this.buttonDisable = false;
         return;
       }
 
-      let postRequestObj = { ...postRequestData };
+      let postRequestObj = { ...this.$store.state.postRequestData };
       postRequestObj.body = JSON.stringify({
-        distributorName: this.duname,
+        username: this.username,
         password: this.password
       });
 
       //TODO: this.$store.commit("setLoggedIn", did, dtoken);
       //TODO:
-      fetch(`${SERVER_URL}dist/login`, postRequestObj)
-        .then(response => response.json())
+      fetch(
+        `${this.$store.state.SERVER_URL}analytics/authenticate`,
+        postRequestObj
+      )
+        .then(response => response.text())
         .then(result => {
+          if (result == "") {
+            throw "";
+          }
           //TODO : Cookies handling is pending
-          this.$store.commit("setLoggedIn", result.did, result.token);
-          this.$cookies.set(didCookieName, result.did);
-          this.$cookies.set(dtokenCookieName, result.token);
+          this.$store.commit("setLoggedIn", result);
+          this.$cookies.set(this.$store.state.cookieToken, result);
           this.onClickToNavigate("Dashboard");
         })
         .catch(error => {
