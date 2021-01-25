@@ -2,7 +2,7 @@
   <div class="content">
     <div class="md-layout">
       <div
-        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-33"
+        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-40"
       >
         <chart-card
           :chart-data="dailySalesChart.data"
@@ -29,7 +29,7 @@
         </chart-card>
       </div>
       <div
-        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-33"
+        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-40"
       >
         <chart-card
           :chart-data="emailsSubscriptionChart.data"
@@ -57,9 +57,9 @@
         </chart-card>
       </div>
       <div
-        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-33"
+        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-19"
       >
-        <chart-card
+        <!-- <chart-card
           :chart-data="dataCompletedTasksChart.data"
           :chart-options="dataCompletedTasksChart.options"
           :chart-type="'Pie'"
@@ -67,9 +67,7 @@
         >
           <template slot="content">
             <h4 class="title">Current Traffic</h4>
-            <!-- <p class="category">
-              Last Campaign Performance
-            </p> -->
+            
           </template>
 
           <template slot="footer">
@@ -78,7 +76,9 @@
               campaign sent 26 minutes ago
             </div>
           </template>
-        </chart-card>
+        </chart-card> -->
+        <md-h1>Active users</md-h1>
+        <PieChart :chart-data="datacollection"></PieChart>
       </div>
       <div
         class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-33"
@@ -206,10 +206,10 @@
         </nav-tabs-card>
       </div>
     </div>
-    <div class="container">
+    <!-- <div class="container">
       <PieChart :chart-data="datacollection"></PieChart>
       <button @click="fillData()">Randomize</button>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -327,17 +327,16 @@ export default {
   methods: {
     fillData() {
       this.datacollection = {
-        labels: [this.getRandomInt(), this.getRandomInt()],
+        labels: ["PageBook", "Quiz", "Quora"],
         datasets: [
           {
             label: "Data One",
-            backgroundColor: "#f87979",
-            data: [this.getRandomInt(), this.getRandomInt()]
-          },
-          {
-            label: "Data One",
-            backgroundColor: "#f87979",
-            data: [this.getRandomInt(), this.getRandomInt()]
+            backgroundColor: ["#03a9f4", "#4caf50", "#ff9800"],
+            data: [
+              this.getRandomInt(),
+              this.getRandomInt(),
+              this.getRandomInt()
+            ]
           }
         ]
       };

@@ -31,14 +31,14 @@ export default {
       selected: [],
       users: [
         {
-          name: 'Sign contract for "What are conference organizers afraid of?"'
+          name: "Close unchecked background processes in the thread."
         },
         {
-          name: "Lines From Great Russian Literature? Or E-mails From My Boss?"
+          name: "Check database for any inconsistencies."
         },
         {
           name:
-            "Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit"
+            "Make a database for these tasks so they actually function instead of being here just for front-end purpose."
         }
       ]
     };

@@ -5,35 +5,48 @@ import UserProfile from "@/pages/UserProfile.vue";
 import Quiz from "@/pages/Quiz.vue";
 import Quora from "@/pages/Quora.vue";
 import PageBook from "@/pages/PageBook.vue";
+import Login from "@/pages/Login.vue";
+import Register from "@/pages/Register.vue";
 
 const routes = [
   {
-    path: "/",
+    path: "/login",
+    name: "Login",
+    component: Login
+  },
+  {
+    path: "/register",
+    name: "Register",
+    component: Register
+  },
+  {
+    path: "/base",
+    name: "BaseDashboard",
     component: DashboardLayout,
-    redirect: "/dashboard",
+    redirect: Dashboard,
     children: [
       {
-        path: "dashboard",
+        path: "/dashboard",
         name: "Dashboard",
         component: Dashboard
       },
       {
-        path: "user",
+        path: "/user",
         name: "User Profile",
         component: UserProfile
       },
       {
-        path: "quiz",
+        path: "/quiz",
         name: "Quiz",
         component: Quiz
       },
       {
-        path: "quora",
+        path: "/quora",
         name: "Quora",
         component: Quora
       },
       {
-        path: "pageBook",
+        path: "/pageBook",
         name: "PageBook",
         component: PageBook
       }

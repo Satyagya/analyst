@@ -1,7 +1,7 @@
 <template>
   <div>
-    <md-table v-model="tableData" :table-header-color="tableHeaderColor">
-      <md-table-row slot="md-table-row" slot-scope="{ item }" :key="item.userId">
+    <md-table v-model="users" :table-header-color="tableHeaderColor">
+      <md-table-row slot="md-table-row" slot-scope="{ item }">
         <md-table-cell md-label="ID">{{ item.userId }}</md-table-cell>
         <md-table-cell md-label="Name">{{ item.username }}</md-table-cell>
         <md-table-cell md-label="Timestamp">{{ item.timestamp }}</md-table-cell>
@@ -18,17 +18,6 @@ export default {
     tableHeaderColor: {
       type: String,
       default: ""
-    },
-    tableData: {
-      type: Array,
-      default: function () {
-        return [{
-          userId: "Random_id",
-          username: "randomeID",
-          timestamp: "26-12-2020",
-          areaOfInterests: "Desi Daru"
-        }]
-      }
     }
   },
   data() {
@@ -65,6 +54,17 @@ export default {
         }
       ]
     };
+  },
+  //inside () link
+  beforeMount(){
+    //TODO: hit fetch request before mount for data of the table
+    fetch(`${this.$store.state.COMMON_INFRA_SERVER}`)
+        .then(response => response.json())
+        .then(result => {
+          console.log(result);
+          this.users = result;
+        })
+        .catch(error => console.log);
   }
 };
 </script>

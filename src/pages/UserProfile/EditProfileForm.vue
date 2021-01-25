@@ -10,8 +10,8 @@
         <div class="md-layout">
           <div class="md-layout-item md-small-size-100 md-size-33">
             <md-field>
-              <label>Admin_id (disabled)</label>
-              <md-input v-model="disabled" disabled></md-input>
+              <label>Admin_id</label>
+              <md-input v-model="adminID" type="text"></md-input>
             </md-field>
           </div>
           <div class="md-layout-item md-small-size-100 md-size-33">
@@ -46,20 +46,23 @@
           </div> -->
           <div class="md-layout-item md-small-size-100 md-size-33">
             <md-field>
-              <label>City</label>
-              <md-input v-model="city" type="text"></md-input>
+              <label>City(disabled)</label>
+              <!-- <md-input v-model="city" type="text"></md-input> -->
+              <md-input v-model="disabled" disabled></md-input>
             </md-field>
           </div>
           <div class="md-layout-item md-small-size-100 md-size-33">
             <md-field>
-              <label>Country</label>
-              <md-input v-model="country" type="text"></md-input>
+              <label>Country(disabled)</label>
+              <!-- <md-input v-model="country" type="text"></md-input> -->
+              <md-input v-model="disabled" disabled></md-input>
             </md-field>
           </div>
           <div class="md-layout-item md-small-size-100 md-size-33">
             <md-field>
-              <label>Postal Code</label>
-              <md-input v-model="code" type="number"></md-input>
+              <label>Postal Code(disabled)</label>
+              <!-- <md-input v-model="code" type="number"></md-input> -->
+              <md-input v-model="disabled" disabled></md-input>
             </md-field>
           </div>
           <div class="md-layout-item md-size-100 text-right">
