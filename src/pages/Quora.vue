@@ -348,43 +348,45 @@ export default {
           return obj;
         }
       });
+    },
+      getMostPopularInQuora() {
+      fetch(`${this.$store.state.ANALYTICS_SERVER}analytics/mostpopularinquora`)
+        .then(response => response.json())
+        .then(result => {
+          console.log("mostpopularinquora", result);
+          this.categoryName1 = result.categoryName;
+          this.likes1 = result.likes;
+          this.dislikes1 = result.dislikes;
+          this.comments1 = result.comments;
+          //console.log("category name :"+this.categoryName1);
+        })
+        .catch(error => console.log);
+    },
+    getMostDislikedInQuora() {
+      fetch(`${this.$store.state.ANALYTICS_SERVER}analytics/mostdislikedinquora`)
+        .then(response => response.json())
+        .then(result => {
+          //console.log(result);
+          this.categoryName2 = result.categoryName;
+          console.log("mostdislikedinquora", this.categoryName1, this.categoryName2, this.categoryName3, result);
+          this.likes2 = result.likes;
+          this.dislikes2 = result.dislikes;
+          this.comments2 = result.comments;
+        })
+        .catch(error => console.log);
+    },
+    getMostCommentedInQuora() {
+      fetch(`${this.$store.state.ANALYTICS_SERVER}analytics/mostcommentedinquora`)
+        .then(response => response.json())
+        .then(result => {
+          console.log("mostcommentedinquora", result);
+          this.categoryName3 = result.categoryName;
+          this.likes3 = result.likes;
+          this.dislikes3 = result.dislikes;
+          this.comments3 = result.comments;
+        })
+        .catch(error => console.log);
     }
-  },
-  getMostPopularInQuora() {
-    fetch(`${this.$store.state.ANALYTICS_SERVER}analytics/mostpopularinquora`)
-      .then(response => response.json())
-      .then(result => {
-        //console.log(result);
-        this.categoryName1 = result.categoryName;
-        this.likes1 = result.likes;
-        this.dislikes1 = result.dislikes;
-        this.comments1 = result.comments;
-      })
-      .catch(error => console.log);
-  },
-  getMostDislikedInQuora() {
-    fetch(`${this.$store.state.ANALYTICS_SERVER}analytics/mostdislikedinquora`)
-      .then(response => response.json())
-      .then(result => {
-        //console.log(result);
-        this.categoryName2 = result.categoryName;
-        this.likes2 = result.likes;
-        this.dislikes2 = result.dislikes;
-        this.comments2 = result.comments;
-      })
-      .catch(error => console.log);
-  },
-  getMostCommentedInQuora() {
-    fetch(`${this.$store.state.ANALYTICS_SERVER}analytics/mostcommentedinquora`)
-      .then(response => response.json())
-      .then(result => {
-        //console.log(result);
-        this.categoryName3 = result.categoryName;
-        this.likes3 = result.likes;
-        this.dislikes3 = result.dislikes;
-        this.comments3 = result.comments;
-      })
-      .catch(error => console.log);
   },
   beforeMount() {
     //TODO: fetch request from the apis then populate

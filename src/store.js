@@ -11,7 +11,7 @@ const Store = new Vuex.Store({
     isLoggedIn: false,
     SERVER_URL: "http://10.177.1.95:8091/",
     ANALYTICS_SERVER: "http://10.177.1.164:8080/",
-    COMMON_INFRA_SERVER: "http://10.177.1.51:8085/",
+    COMMON_INFRA_SERVER: "http://10.177.1.104:8085/",
     QUIZ_SERVER1: "http://10.177.1.113:8081/",
     QUIZ_SERVER2: "http://10.177.1.113:8083/",
     postRequestData: {

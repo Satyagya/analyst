@@ -436,7 +436,7 @@ export default {
       fetch(`${this.$store.state.ANALYTICS_SERVER}analytics/count/0`)
         .then(response => response.json())
         .then(result => {
-          console.log(result);
+          console.log("result1", result);
           this.totalActiveUsers1 = result;
           this.pbchart = result;
           //console.log("pbchart "+this.pbchart);
@@ -445,13 +445,14 @@ export default {
             this.totalActiveUsers4,
             this.totalActiveUsers1
           );
+          this.fillData();
         })
         .catch(error => console.log);
 
       fetch(`${this.$store.state.ANALYTICS_SERVER}analytics/count/1`)
         .then(response => response.json())
         .then(result => {
-          console.log(result);
+          console.log("result2", result);
           this.totalActiveUsers2 = result;
           this.quorachart = result;
           this.totalActiveUsers += this.totalActiveUsers2;
@@ -459,13 +460,14 @@ export default {
             this.totalActiveUsers4,
             this.totalActiveUsers2
           );
+          this.fillData();
         })
         .catch(error => console.log);
 
       fetch(`${this.$store.state.ANALYTICS_SERVER}analytics/count/2`)
         .then(response => response.json())
         .then(result => {
-          console.log(result);
+          console.log("result3", result);
           this.totalActiveUsers3 = result;
           this.quizchart = result;
           this.totalActiveUsers += this.totalActiveUsers3;
@@ -473,11 +475,9 @@ export default {
             this.totalActiveUsers4,
             this.totalActiveUsers3
           );
+          this.fillData()
         })
         .catch(error => console.log);
-
-      //this.totalActiveUsers=this.totalActiveUsers1+this.totalActiveUsers2+this.totalActiveUsers3;
-      //this.totalActiveUsers4= Math.max(this.totalActiveUsers1,this.totalActiveUsers2,this.totalActiveUsers3);
     }
   },
   beforeMount() {
