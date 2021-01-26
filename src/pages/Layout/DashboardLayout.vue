@@ -63,6 +63,24 @@ export default {
       sidebarBackground: "red",
       sidebarBackgroundImage: require("@/assets/img/sidebar.jpg")
     };
+  },
+  beforeMount() {
+    if (this.$store.state.isLoggedIn || 
+          this.$cookies.isKey(this.$store.state.cookieToken)){
+          if (!this.$store.state.isLoggedIn){
+              this.$store.commit("setLoggedIn", 
+              this.$cookies.get(this.$store.state.cookieToken));
+          }
+    }else{
+      this.$router.push({name: "Login"});
+    }
+  },
+  methods: {
+    logout() {
+      this.$store.commit("setLogout");
+      this.$cookies.remove(this.$store.state.cookieToken);
+      this.$router.push({name: "Login"});
+    }
   }
 };
 </script>
