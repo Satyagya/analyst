@@ -61,7 +61,7 @@
       >
         <stats-card data-background-color="blue">
           <template slot="header">
-            <md-icon>L</md-icon>
+            <md-icon>LP</md-icon>
           </template>
 
           <template slot="content">
@@ -87,7 +87,7 @@
       >
         <stats-card data-background-color="blue">
           <template slot="header">
-            <md-icon>D</md-icon>
+            <md-icon>DP</md-icon>
           </template>
 
           <template slot="content">
@@ -113,7 +113,7 @@
       >
         <stats-card data-background-color="blue">
           <template slot="header">
-            <md-icon>C</md-icon>
+            <md-icon>CP</md-icon>
           </template>
 
           <template slot="content">
@@ -149,8 +149,19 @@
         </md-card>
       </div>
 
+      <div class="dropdown">
+        <button class="dropbtn">Time-Filter</button>
+        <div class="dropdown-content">
+          <md-button @click="filter(7)">1 Week</md-button>
+          <md-button @click="filter(14)">2 Weeks</md-button>
+          <md-button @click="filter(21)">3 Weeks</md-button>
+          <md-button @click="filter(31)">1 Month</md-button>
+          <md-button @click="filter(180)">6 Month</md-button>
+        </div>
+      </div>
+
       <div
-        class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-28"
+        class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-16"
       >
         <stats-card data-background-color="blue">
           <template slot="header">
@@ -172,7 +183,7 @@
       </div>
 
       <div
-        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-50"
+        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-75"
       >
         <md-card>
           <md-card-header data-background-color="blue">
@@ -193,16 +204,6 @@
             </md-table-row> -->
           </md-card-content>
         </md-card>
-      </div>
-      <div class="dropdown">
-        <button class="dropbtn">Time-Filter</button>
-        <div class="dropdown-content">
-          <md-button @click="fetchData(7)">1 Week</md-button>
-          <md-button @click="fetchData(14)">2 Weeks</md-button>
-          <md-button @click="fetchData(21)">3 Weeks</md-button>
-          <md-button @click="fetchData(31)">1 Month</md-button>
-          <md-button @click="fetchData(180)">6 Month</md-button>
-        </div>
       </div>
       <div></div>
     </div>
@@ -398,9 +399,7 @@ export default {
     filter(time) {
       //TODO: filter the list based time
       this.filteredData = this.originalData.filter(obj => {
-        if (this.getDayDifference(obj.timeStamp) < time) {
-          return obj;
-        }
+        if (this.getDayDifference(obj.timestamp) < time) return obj;
       });
     }
   },

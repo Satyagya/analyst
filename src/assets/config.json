@@ -1,0 +1,13 @@
+{
+    "SERVER_URL": "http://10.177.1.95:8091/",
+    "postRequestData": {
+        "method": "POST",
+        "mode": "cors", 
+        "cache": "no-cache",
+        "headers": {
+            "Content-Type": "application/json"
+        }
+    },
+    "didCookieName": "DID",
+    "dtokenCookieName": "DTOKEN"
+}

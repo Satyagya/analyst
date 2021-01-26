@@ -2,7 +2,7 @@
   <div>
     <md-table v-model="users" :table-header-color="tableHeaderColor">
       <md-table-row slot="md-table-row" slot-scope="{ item }">
-        <md-table-cell md-label="ID">{{ item.quizId }}</md-table-cell>
+        <md-table-cell md-label="Quiz_ID">{{ item.quizId }}</md-table-cell>
         <md-table-cell md-label="Quiz Name">{{ item.quizName }}</md-table-cell>
         <md-table-cell md-label="Total Players">{{
           item.totalPlayers

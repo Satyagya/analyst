@@ -5,7 +5,7 @@
     </div>
 
     <md-card-content>
-      <h6 class="category text-gray">Admin</h6>
+      <h6 class="category text-gray">Senior Admin</h6>
       <h4 class="card-title">Evil Tester</h4>
       <p class="card-description">
         Evil Tester, as the name suggests, is pure evil. He might go to the

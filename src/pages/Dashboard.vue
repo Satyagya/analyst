@@ -147,7 +147,7 @@
         </stats-card>
       </div> -->
       <div
-        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-70"
+        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-75"
       >
         <nav-tabs-card>
           <template slot="content">
@@ -193,7 +193,7 @@
             </div>
           </template>
         </chart-card> -->
-        <md-h1>Active users</md-h1>
+        <md-h1>Active users:</md-h1>
         <PieChart :chart-data="datacollection"></PieChart>
       </div>
 
@@ -475,7 +475,7 @@ export default {
             this.totalActiveUsers4,
             this.totalActiveUsers3
           );
-          this.fillData()
+          this.fillData();
         })
         .catch(error => console.log);
     }

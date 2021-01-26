@@ -12,7 +12,8 @@
 </template>
 
 <script>
-import { EditProfileForm, UserCard } from "@/pages";
+import EditProfileForm from "./UserProfile/EditProfileForm";
+import UserCard from "./UserProfile/UserCard";
 
 export default {
   components: {

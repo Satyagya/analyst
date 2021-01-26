@@ -61,11 +61,11 @@
       >
         <stats-card data-background-color="orange">
           <template slot="header">
-            <md-icon>L</md-icon>
+            <md-icon>UQ</md-icon>
           </template>
 
           <template slot="content">
-            <p class="category">Most Liked Post</p>
+            <p class="category">Most Upvoted Question's Topic</p>
             <h3 class="title">
               {{ categoryName1 }}
             </h3>
@@ -73,9 +73,9 @@
 
           <template slot="footer">
             <div class="stats">
-              <h5 class="title">Likes: {{ likes1 }}</h5>
-              <h5 class="title">Dislikes: {{ dislikes1 }}</h5>
-              <h5 class="title">Comments: {{ comments1 }}</h5>
+              <h5 class="title">Upvotes: {{ likes1 }}</h5>
+              <h5 class="title">DownVotes: {{ dislikes1 }}</h5>
+              <h5 class="title">Replies: {{ comments1 }}</h5>
               <!-- <md-icon class="text-danger">warning</md-icon>
               <a href="#pablo">Update Requeired</a> -->
             </div>
@@ -87,11 +87,11 @@
       >
         <stats-card data-background-color="orange">
           <template slot="header">
-            <md-icon>D</md-icon>
+            <md-icon>DQ</md-icon>
           </template>
 
           <template slot="content">
-            <p class="category">Most Disiked Post</p>
+            <p class="category">Most Downvoted Question's Topic</p>
             <h3 class="title">
               {{ categoryName2 }}
             </h3>
@@ -99,9 +99,9 @@
 
           <template slot="footer">
             <div class="stats">
-              <h5 class="title">Likes: {{ likes2 }}</h5>
-              <h5 class="title">Dislikes: {{ dislikes2 }}</h5>
-              <h5 class="title">Comments: {{ comments2 }}</h5>
+              <h5 class="title">Upvotes: {{ likes2 }}</h5>
+              <h5 class="title">DownVotes: {{ dislikes2 }}</h5>
+              <h5 class="title">Replies: {{ comments2 }}</h5>
               <!-- <md-icon class="text-danger">warning</md-icon>
               <a href="#pablo">Update Requeired</a> -->
             </div>
@@ -113,11 +113,11 @@
       >
         <stats-card data-background-color="orange">
           <template slot="header">
-            <md-icon>C</md-icon>
+            <md-icon>DT</md-icon>
           </template>
 
           <template slot="content">
-            <p class="category">Most Commented Post</p>
+            <p class="category">Most Discussed Topic</p>
             <h3 class="title">
               {{ categoryName3 }}
             </h3>
@@ -125,9 +125,9 @@
 
           <template slot="footer">
             <div class="stats">
-              <h5 class="title">Likes: {{ likes3 }}</h5>
-              <h5 class="title">Dislikes: {{ dislikes3 }}</h5>
-              <h5 class="title">Comments: {{ comments3 }}</h5>
+              <h5 class="title">Upvotes: {{ likes3 }}</h5>
+              <h5 class="title">DownVotes: {{ dislikes3 }}</h5>
+              <h5 class="title">Replies: {{ comments3 }}</h5>
               <!-- <md-icon class="text-danger">warning</md-icon>
               <a href="#pablo">Update Requeired</a> -->
             </div>
@@ -149,8 +149,19 @@
         </md-card>
       </div>
 
+      <div class="dropdown">
+        <button class="dropbtn">Time-Filter</button>
+        <div class="dropdown-content">
+          <md-button @click="fetchData(7)">1 Week</md-button>
+          <md-button @click="fetchData(14)">2 Weeks</md-button>
+          <md-button @click="fetchData(21)">3 Weeks</md-button>
+          <md-button @click="fetchData(31)">1 Month</md-button>
+          <md-button @click="fetchData(180)">6 Month</md-button>
+        </div>
+      </div>
+
       <div
-        class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-28"
+        class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-16"
       >
         <stats-card data-background-color="orange">
           <template slot="header">
@@ -172,7 +183,7 @@
       </div>
 
       <div
-        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-50"
+        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-75"
       >
         <md-card>
           <md-card-header data-background-color="orange">
@@ -186,16 +197,6 @@
             ></ordered-table>
           </md-card-content>
         </md-card>
-      </div>
-      <div class="dropdown">
-        <button class="dropbtn">Time-Filter</button>
-        <div class="dropdown-content">
-          <md-button @click="fetchData(7)">1 Week</md-button>
-          <md-button @click="fetchData(14)">2 Weeks</md-button>
-          <md-button @click="fetchData(21)">3 Weeks</md-button>
-          <md-button @click="fetchData(31)">1 Month</md-button>
-          <md-button @click="fetchData(180)">6 Month</md-button>
-        </div>
       </div>
       <div></div>
     </div>
@@ -349,7 +350,7 @@ export default {
         }
       });
     },
-      getMostPopularInQuora() {
+    getMostPopularInQuora() {
       fetch(`${this.$store.state.ANALYTICS_SERVER}analytics/mostpopularinquora`)
         .then(response => response.json())
         .then(result => {
@@ -363,12 +364,20 @@ export default {
         .catch(error => console.log);
     },
     getMostDislikedInQuora() {
-      fetch(`${this.$store.state.ANALYTICS_SERVER}analytics/mostdislikedinquora`)
+      fetch(
+        `${this.$store.state.ANALYTICS_SERVER}analytics/mostdislikedinquora`
+      )
         .then(response => response.json())
         .then(result => {
           //console.log(result);
           this.categoryName2 = result.categoryName;
-          console.log("mostdislikedinquora", this.categoryName1, this.categoryName2, this.categoryName3, result);
+          console.log(
+            "mostdislikedinquora",
+            this.categoryName1,
+            this.categoryName2,
+            this.categoryName3,
+            result
+          );
           this.likes2 = result.likes;
           this.dislikes2 = result.dislikes;
           this.comments2 = result.comments;
@@ -376,7 +385,9 @@ export default {
         .catch(error => console.log);
     },
     getMostCommentedInQuora() {
-      fetch(`${this.$store.state.ANALYTICS_SERVER}analytics/mostcommentedinquora`)
+      fetch(
+        `${this.$store.state.ANALYTICS_SERVER}analytics/mostcommentedinquora`
+      )
         .then(response => response.json())
         .then(result => {
           console.log("mostcommentedinquora", result);

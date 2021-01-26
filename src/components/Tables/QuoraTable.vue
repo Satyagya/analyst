@@ -2,8 +2,11 @@
   <div>
     <md-table v-model="users" :table-header-color="tableHeaderColor">
       <md-table-row slot="md-table-row" slot-scope="{ item }">
-        <md-table-cell md-label="ID">{{ item.userId }}</md-table-cell>
-        <md-table-cell md-label="Page Topic">{{ item.category }}</md-table-cell>
+        <md-table-cell md-label="Page_ID">{{ item.userId }}</md-table-cell>
+        <md-table-cell md-label="User">{{ item.username }}</md-table-cell>
+        <md-table-cell md-label="Page Topic">{{
+          item.areaOfIntrests
+        }}</md-table-cell>
         <md-table-cell md-label="Views">{{ item.views }}</md-table-cell>
         <md-table-cell md-label="follows">{{ item.follows }}</md-table-cell>
       </md-table-row>
@@ -84,7 +87,7 @@ export default {
   //inside () link
   beforeMount() {
     //TODO: hit fetch request before mount for data of the table
-    fetch(`${this.$store.state.COMMON_INFRA_SERVER}`)
+    fetch(`${this.$store.state.ANALYTICS_SERVER}analytics/usersinquora`)
       .then(response => response.json())
       .then(result => {
         console.log(result);
