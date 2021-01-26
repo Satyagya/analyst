@@ -11,9 +11,7 @@
         <md-table-cell md-label="Name">{{ item.userName }}</md-table-cell>
         <md-table-cell md-label="Email">{{ item.email }}</md-table-cell>
         <md-table-cell md-label="Timestamp">{{ item.timestamp }}</md-table-cell>
-        <md-table-cell md-label="Area of Interest">{{
-          item.areaOfInterests
-        }}</md-table-cell>
+        <md-table-cell md-label="Area of Interest">{{ item.areaOfInterests }}</md-table-cell>
       </md-table-row>
     </md-table>
   </div>
@@ -22,13 +20,15 @@
 <script>
 export default {
   name: "ordered-table",
-  props: {
-    tableHeaderColor: {
-      type: String,
-      default: ""
-    },
-    channelID: Number
-  },
+  props: ['tableData','tableHeaderColor', 'channelID' ],
+  // {
+  //   tableData,
+  //   tableHeaderColor: {
+  //     type: String,
+  //     default: ""
+  //   },
+  //   channelID: Number
+  // },
   data() {
     return {
       selected: [],
@@ -82,6 +82,7 @@ export default {
   },
   mounted() {
     this.getDataFromAPI();
+    console.log("this table", this.tableData);
   }
 };
 </script>

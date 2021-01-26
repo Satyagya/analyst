@@ -157,6 +157,8 @@
           <md-button @click="filter(21)">3 Weeks</md-button>
           <md-button @click="filter(31)">1 Month</md-button>
           <md-button @click="filter(180)">6 Month</md-button>
+          <md-button @click="filter(365)">1 Year </md-button>
+          <md-button @click="filter(1095)">3 Year </md-button>
         </div>
       </div>
 
@@ -192,6 +194,7 @@
           </md-card-header>
           <md-card-content>
             <ordered-table
+              :tableData="filteredData"
               :channelID="channelID"
               table-header-color="red"
             ></ordered-table>
@@ -243,7 +246,7 @@ export default {
       totalActiveUsers: 10,
       channelID: 0,
       originalData: [],
-      filteredData: [],
+      filteredData: null,
       processedData: {
         labels: [
           "2017-11-13",
@@ -265,7 +268,7 @@ export default {
             tension: 0
           }),
           low: 0,
-          high: 300, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+          high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
           chartPadding: {
             top: 5,
             right: 0,
@@ -296,7 +299,7 @@ export default {
       return new Date(d.setDate(diff));
     },
     groupWeek(arrayOfObject) {
-      let mrx = arrayOfObject.reduce((m, o) => {
+      return arrayOfObject.reduce((m, o) => {
         //.log("m,o", m,o);
         let monday = this.getMonday(new Date(o.timestamp));
         let mondayYMD = monday.toISOString().slice(0, 10);
@@ -311,14 +314,32 @@ export default {
           m.push(o);
         }
         return m;
-        //console.log("m", m);
       }, []);
-      //console.log("mrx", mrx);
-      return mrx;
+    },
+    setGraphData(){
+      fetch(
+        `${this.$store.state.COMMON_INFRA_SERVER}history/getLoginHistory/`
+      )
+        .then(response => response.json())
+        .then(result => {
+          let tempArr = result.filter(
+            obj => obj.channelId == this.channelID
+          );
+          let tempData = this.groupWeek(tempArr);
+          tempArr = [];
+          this.processedData.labels = [];
+          for (let i = 0; i < tempData.length; i++) {
+            this.processedData.labels.push(tempData[i]["timestamp"]);
+            tempArr.push(tempData[i]["count"] || 0);
+          }
+
+          this.processedData.series = [tempArr];
+        })
+        .catch(error => console.log);
     },
     getDataFromAPI() {
       fetch(
-        `${this.$store.state.COMMON_INFRA_SERVER}history/getRegistrationHistory`
+        `${this.$store.state.COMMON_INFRA_SERVER}history/getRegistrationHistory/`
       )
         .then(response => response.json())
         .then(result => {
@@ -327,20 +348,6 @@ export default {
             obj => obj.channelId == this.channelID
           );
           this.filteredData = [...this.originalData];
-          let dateData = this.groupWeek(this.originalData),
-            tempData = [];
-          console.log("groupWeek", dataData);
-          this.processedData = {
-            labels: [],
-            series: []
-          };
-
-          for (let i = 0; i < dataData.length; i++) {
-            this.processedData.labels.push(dataData[i]["timeStamp"]);
-            tempData.push(dataData[i]["count"]);
-          }
-
-          this.processedData.series = [[...tempData]];
         })
         .catch(error => console.log);
     },
@@ -390,27 +397,31 @@ export default {
         })
         .catch(error => console.log);
     },
-
+    //this totally working code not need to test.
     getDayDifference(pastDate) {
       let pastTime = new Date(pastDate);
       let presentTime = new Date();
-      return (pastTime.getTime() - presentTime.getTime()) / (1000 * 3600 * 24);
+      return Math.floor(
+        (presentTime.getTime() - pastTime.getTime()) / (1000 * 3600 * 24)
+      );
     },
     filter(time) {
+      console.log("before", this.filteredData.length);
       //TODO: filter the list based time
       this.filteredData = this.originalData.filter(obj => {
         if (this.getDayDifference(obj.timestamp) < time) return obj;
       });
+      console.log("after", this.filteredData.length);
     }
   },
   beforeMount() {
+    this.setGraphData();
     //TODO: fetch request from the apis then populate
     this.getDataFromAPI();
     this.getTotalActiveUsers();
     this.getMostPopularInPb();
     this.getMostDislikedInPb();
     this.getMostCommentedInPb();
-    //this.dailySalesChart.options.high =
   }
 };
 </script>
