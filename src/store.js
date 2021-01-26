@@ -25,7 +25,8 @@ const Store = new Vuex.Store({
     },
     didCookieName: "DID",
     dtokenCookieName: "DTOKEN",
-    cookieToken: "COOKIE_TOKEN"
+    cookieToken: "COOKIE_TOKEN",
+    userStats: []
   },
   mutations: {
     setLoggedIn(state, newDID, newDToken) {
@@ -37,6 +38,9 @@ const Store = new Vuex.Store({
       state.isLoggedIn = false;
       state.did = null;
       state.dtoken = null;
+    },
+    updateUserStats(state, newData) {
+      state.userStats = newData;
     }
   },
   getters: {}

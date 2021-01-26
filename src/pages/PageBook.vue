@@ -316,15 +316,11 @@ export default {
         return m;
       }, []);
     },
-    setGraphData(){
-      fetch(
-        `${this.$store.state.COMMON_INFRA_SERVER}history/getLoginHistory/`
-      )
+    setGraphData() {
+      fetch(`${this.$store.state.COMMON_INFRA_SERVER}history/getLoginHistory/`)
         .then(response => response.json())
         .then(result => {
-          let tempArr = result.filter(
-            obj => obj.channelId == this.channelID
-          );
+          let tempArr = result.filter(obj => obj.channelId == this.channelID);
           let tempData = this.groupWeek(tempArr);
           tempArr = [];
           this.processedData.labels = [];
@@ -406,12 +402,11 @@ export default {
       );
     },
     filter(time) {
-      console.log("before", this.filteredData.length);
       //TODO: filter the list based time
       this.filteredData = this.originalData.filter(obj => {
         if (this.getDayDifference(obj.timestamp) < time) return obj;
       });
-      console.log("after", this.filteredData.length);
+      this.$store.commit("updateUserStats", this.filteredData);
     }
   },
   beforeMount() {
