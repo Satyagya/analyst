@@ -34,6 +34,12 @@
   position: relative;
   display: inline-block;
 }
+.scrollbtn {
+  position:fixed;
+  top:53%;
+  float:right;
+  left:94%;
+}
 
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {

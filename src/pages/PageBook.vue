@@ -39,12 +39,6 @@
         >
           <template slot="content">
             <h4 class="title">Weekly Traffic History</h4>
-            <!-- <p class="category">
-              <span class="text-success"
-                ><i class="fas fa-long-arrow-alt-up"></i> 55%
-              </span>
-              Increase
-            </p> -->
           </template>
 
           <template slot="footer">
@@ -57,7 +51,7 @@
       </div>
 
       <div
-        class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-32"
+        class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25"
       >
         <stats-card data-background-color="blue">
           <template slot="header">
@@ -83,7 +77,7 @@
         </stats-card>
       </div>
       <div
-        class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-32"
+        class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25"
       >
         <stats-card data-background-color="blue">
           <template slot="header">
@@ -109,7 +103,7 @@
         </stats-card>
       </div>
       <div
-        class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-32"
+        class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25"
       >
         <stats-card data-background-color="blue">
           <template slot="header">
@@ -134,14 +128,35 @@
           </template>
         </stats-card>
       </div>
+      <div
+        class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25"
+      >
+        <stats-card data-background-color="blue">
+          <template slot="header">
+            <md-icon>info_outline</md-icon>
+          </template>
+
+          <template slot="content">
+            <p class="category">Total Page Views</p>
+            <h3 class="title">{{ totalpageviews }}</h3>
+          </template>
+
+          <template slot="footer">
+            <div class="stats">
+              <md-icon>local_offer</md-icon>
+              Tracked from Pagebook
+            </div>
+          </template>
+        </stats-card>
+      </div>
 
       <div
         class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-100"
       >
         <md-card>
           <md-card-header data-background-color="blue">
-            <h4 class="title">Page Visits</h4>
-            <p class="category">Details</p>
+            <h4 class="title">User Page Details</h4>
+            <p class="category">Dynamic Data</p>
           </md-card-header>
           <md-card-content>
             <page-book-table table-header-color="red"></page-book-table>
@@ -229,9 +244,9 @@ export default {
   data() {
     return {
       //idhr dekho
-      categoryName1: "war",
-      categoryName2: "war",
-      categoryName3: "war",
+      categoryName1: "dummy_data",
+      categoryName2: "dummy_data",
+      categoryName3: "dummy_data",
       likes1: 1,
       dislikes1: 1,
       comments1: 2,
@@ -241,8 +256,11 @@ export default {
       likes3: 1,
       dislikes3: 1,
       comments3: 2,
+
+      totalpageviews: 0,
       //idhr dekho
       time: 10,
+      d: 10000000,
       totalActiveUsers: 10,
       channelID: 0,
       originalData: [],
@@ -256,7 +274,7 @@ export default {
           "2017-10-01",
           "2017-10-01"
         ],
-        series: [[124, 33, 66, 99, 23, 40]]
+        series: [[24, 33, 23, 42, 23, 40]]
       },
       dailySalesChart: {
         data: {
@@ -268,7 +286,7 @@ export default {
             tension: 0
           }),
           low: 0,
-          high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+          high: 60, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
           chartPadding: {
             top: 5,
             right: 0,
@@ -317,7 +335,7 @@ export default {
       }, []);
     },
     setGraphData() {
-      fetch(`${this.$store.state.COMMON_INFRA_SERVER}history/getLoginHistory/`)
+      fetch(`${this.$store.state.COMMON_INFRA_SERVER}history/getLoginHistory`)
         .then(response => response.json())
         .then(result => {
           let tempArr = result.filter(obj => obj.channelId == this.channelID);
@@ -335,7 +353,7 @@ export default {
     },
     getDataFromAPI() {
       fetch(
-        `${this.$store.state.COMMON_INFRA_SERVER}history/getRegistrationHistory/`
+        `${this.$store.state.COMMON_INFRA_SERVER}history/getRegistrationHistory`
       )
         .then(response => response.json())
         .then(result => {
@@ -344,6 +362,19 @@ export default {
             obj => obj.channelId == this.channelID
           );
           this.filteredData = [...this.originalData];
+
+          this.$store.commit("updateUserStats", this.originalData);
+        })
+        .catch(error => console.log);
+    },
+    getTotalPageViews() {
+      fetch(`${this.$store.state.ANALYTICS_SERVER}analytics/countallviewsinpb`)
+        .then(response => response.json())
+        .then(result => {
+          console.log("result1", result);
+          this.totalpageviews = result;
+          //console.log("pbchart "+this.pbchart);
+          //this.fillData();
         })
         .catch(error => console.log);
     },
@@ -404,7 +435,11 @@ export default {
     filter(time) {
       //TODO: filter the list based time
       this.filteredData = this.originalData.filter(obj => {
-        if (this.getDayDifference(obj.timestamp) < time) return obj;
+        if (
+          obj.channelId == this.channelID &&
+          this.getDayDifference(obj.timestamp) < time
+        )
+          return obj;
       });
       this.$store.commit("updateUserStats", this.filteredData);
     }
@@ -417,6 +452,7 @@ export default {
     this.getMostPopularInPb();
     this.getMostDislikedInPb();
     this.getMostCommentedInPb();
+    this.getTotalPageViews();
   }
 };
 </script>

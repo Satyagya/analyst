@@ -2,56 +2,22 @@
   <div class="content">
     <div class="md-layout">
       <div
-        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-50"
+        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-100"
       >
         <chart-card
-          :chart-data="dailySalesChart.data"
+          :chart-data="processedData"
           :chart-options="dailySalesChart.options"
           :chart-type="'Line'"
           data-background-color="red"
         >
           <template slot="content">
             <h4 class="title">Weekly User Traffic</h4>
-            <p class="category">
-              <span class="text-success"
-                ><i class="fas fa-long-arrow-alt-up"></i> 55%
-              </span>
-              Increase
-            </p>
           </template>
 
           <template slot="footer">
             <div class="stats">
               <md-icon>access_time</md-icon>
-              updated 4 minutes ago
-            </div>
-          </template>
-        </chart-card>
-      </div>
-      <div
-        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-50"
-      >
-        <chart-card
-          :chart-data="emailsSubscriptionChart.data"
-          :chart-options="emailsSubscriptionChart.options"
-          :chart-responsive-options="emailsSubscriptionChart.responsiveOptions"
-          :chart-type="'Bar'"
-          data-background-color="red"
-        >
-          <template slot="content">
-            <h4 class="title">Registered Users</h4>
-            <p class="category">
-              <span class="text-danger"
-                ><i class="fas fa-long-arrow-alt-down"></i> 32%
-              </span>
-              Decrease
-            </p>
-          </template>
-
-          <template slot="footer">
-            <div class="stats">
-              <md-icon>access_time</md-icon>
-              updated 10 days ago
+              Updated Today
             </div>
           </template>
         </chart-card>
@@ -114,13 +80,34 @@
 
           <template slot="content">
             <p class="category">Total Page Views</p>
-            <h3 class="title">7509</h3>
+            <h3 class="title">{{totalpageviews}}</h3>
           </template>
 
           <template slot="footer">
             <div class="stats">
               <md-icon>local_offer</md-icon>
-              Tracked from Quiz/Quora/PageBook
+              Tracked from Quora/PageBook
+            </div>
+          </template>
+        </stats-card>
+      </div>
+      <div
+        class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-70"
+      >
+        <stats-card data-background-color="orange">
+          <template slot="header">
+            <md-icon>info_outline</md-icon>
+          </template>
+
+          <template slot="content">
+            <p class="category">Connections (Followers)</p>
+            <h3 class="title">{{totalfollows}}</h3>
+          </template>
+
+          <template slot="footer">
+            <div class="stats">
+              <md-icon>local_offer</md-icon>
+              Tracked from Quora/PageBook
             </div>
           </template>
         </stats-card>
@@ -146,7 +133,7 @@
           </template>
         </stats-card>
       </div> -->
-      <div
+      <!-- <div
         class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-75"
       >
         <nav-tabs-card>
@@ -154,48 +141,43 @@
             <span class="md-nav-tabs-title">Tasks:</span>
             <md-tabs class="md-success" md-alignment="left">
               <md-tab id="tab-home" md-label="Quiz" md-icon="bug_report">
-                <!-- <md-tab id="tab-home" md-label="Bugs" md-icon="bug_report">     -->
+                
                 <nav-tabs-table></nav-tabs-table>
               </md-tab>
 
               <md-tab id="tab-pages" md-label="Quora" md-icon="code">
-                <!-- <md-tab id="tab-pages" md-label="Website" md-icon="code"> -->
+               
                 <nav-tabs-table></nav-tabs-table>
               </md-tab>
 
               <md-tab id="tab-posts" md-label="PageBook" md-icon="cloud">
-                <!-- <md-tab id="tab-posts" md-label="server" md-icon="cloud"> -->
+                
                 <nav-tabs-table></nav-tabs-table>
               </md-tab>
             </md-tabs>
           </template>
         </nav-tabs-card>
-      </div>
+      </div> -->
 
       <div class="md-layout-item md-medium-size- md-xsmall-size- md-size-25">
         <!-- dont change md-size again -->
 
-        <!-- <chart-card
-          :chart-data="dataCompletedTasksChart.data"
-          :chart-options="dataCompletedTasksChart.options"
-          :chart-type="'Pie'"
-          data-background-color="red"
-        >
-          <template slot="content">
-            <h4 class="title">Current Traffic</h4>
-            
-          </template>
-
-          <template slot="footer">
-            <div class="stats">
-              <md-icon>access_time</md-icon>
-              campaign sent 26 minutes ago
-            </div>
-          </template>
-        </chart-card> -->
         <md-h1>Active users:</md-h1>
         <PieChart :chart-data="datacollection"></PieChart>
       </div>
+
+      <!-- <div class="dropdown scrollbtn">
+        <button class="dropbtn">Time-Filter</button>
+        <div class="dropdown-content">
+          <md-button @click="filter(7)">1 Week</md-button>
+          <md-button @click="filter(14)">2 Weeks</md-button>
+          <md-button @click="filter(21)">3 Weeks</md-button>
+          <md-button @click="filter(31)">1 Month</md-button>
+          <md-button @click="filter(180)">6 Month</md-button>
+          <md-button @click="filter(365)">1 Year </md-button>
+          <md-button @click="filter(1095)">3 Year </md-button>
+        </div>
+      </div> -->
 
       <div
         class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-100"
@@ -207,16 +189,17 @@
           </md-card-header>
           <md-card-content>
             <ordered-table
+              :tableData="filteredData"
               :channelID="0"
               table-header-color="red"
             ></ordered-table>
             <ordered-table
+              :tableData="filteredData"
               :channelID="1"
-              table-header-color="red"
             ></ordered-table>
             <ordered-table
+              :tableData="filteredData"
               :channelID="2"
-              table-header-color="red"
             ></ordered-table>
           </md-card-content>
         </md-card>
@@ -233,7 +216,7 @@
 import {
   StatsCard,
   ChartCard,
-  NavTabsCard,
+  //NavTabsCard,
   NavTabsTable,
   OrderedTable
 } from "@/components";
@@ -243,14 +226,10 @@ export default {
   components: {
     StatsCard,
     ChartCard,
-    NavTabsCard,
-    NavTabsTable,
+    //NavTabsCard,
+    //NavTabsTable,
     OrderedTable,
     PieChart
-  },
-  mounted() {
-    this.fillData();
-    //this.renderChart(this.pbchart, this.quizchart, this.quorachart)
   },
   data() {
     return {
@@ -260,11 +239,24 @@ export default {
       totalActiveUsers3: 10,
       totalActiveUsers4: 0,
 
+      totalpageviews:0,
+      totalfollows:0,
+      processedData: {
+        labels: [
+          "2017-11-13",
+          "2017-11-06",
+          "2017-10-02",
+          "2017-11-03",
+          "2017-10-01",
+          "2017-10-01"
+        ],
+        series: [[24, 33, 23,42, 23, 40]]
+      },
       pbchart: 2,
       quorachart: 2,
       quizchart: 2,
-
-      datacollection: null,
+      originalData: [],
+      filteredData: null,
       dailySalesChart: {
         data: {
           labels: ["M", "T", "W", "T", "F", "S", "S"],
@@ -364,45 +356,51 @@ export default {
         ]
       };
     },
-    getRandomInt() {
-      return Math.floor(Math.random() * (50 - 5 + 1)) + 5;
-    },
-    // getTotalActiveUsersInPb() {
-    //   //totalActiveUsers
-    //   fetch(`${this.$store.state.ANALYTICS_SERVER}analytics/count/0`)
-    //     .then(response => response.json())
-    //     .then(result => {
-    //       console.log(result);
-    //       this.pbchart = result;
-    //       return pbchart;
-    //     })
-    //     .catch(error => console.log);
+    // getRandomInt() {
+    //   return Math.floor(Math.random() * (50 - 5 + 1)) + 5;
     // },
-    // getTotalActiveUsersInQuora() {
-    //   //totalActiveUsers
-    //   fetch(`${this.$store.state.ANALYTICS_SERVER}analytics/count/1`)
-    //     .then(response => response.json())
-    //     .then(result => {
-    //       console.log(result);
-    //       this.quorachart = result;
-    //       return quorachart;
-    //     })
-    //     .catch(error => console.log);
-    //   // return (result);
-    // },
-    // getTotalActiveUsersInQuiz() {
-    //   //totalActiveUsers
-    //   fetch(`${this.$store.state.ANALYTICS_SERVER}analytics/count/2`)
-    //     .then(response => response.json())
-    //     .then(result => {
-    //       console.log(result);
-    //       this.quizchart = result;
-    //       return quizchart;
-    //     })
-    //     .catch(error => console.log);
-    //   // return (result);
-    // },
+    
 
+    getMonday(d) {
+      let day = d.getDay();
+      let diff = d.getDate() - day + (day === 0 ? -6 : 1);
+      return new Date(d.setDate(diff));
+    },
+    groupWeek(arrayOfObject) {
+      return arrayOfObject.reduce((m, o) => {
+        //.log("m,o", m,o);
+        let monday = this.getMonday(new Date(o.timestamp));
+        let mondayYMD = monday.toISOString().slice(0, 10);
+        let found = m.find(e => e.timestamp === mondayYMD);
+        if (found) {
+          if (!found.count) {
+            found.count = 0;
+          }
+          found.count += 1;
+        } else {
+          o.timestamp = mondayYMD;
+          m.push(o);
+        }
+        return m;
+      }, []);
+    },
+    setGraphData() {
+      fetch(`${this.$store.state.COMMON_INFRA_SERVER}history/getLoginHistory`)
+        .then(response => response.json())
+        .then(result => {
+          //let tempArr = result;//.filter(obj => obj.channelId == this.channelID);
+          let tempData = this.groupWeek(result);
+          let tempArr = [];
+          this.processedData.labels = [];
+          for (let i = 0; i < tempData.length; i++) {
+            this.processedData.labels.push(tempData[i]["timestamp"]);
+            tempArr.push(tempData[i]["count"] || 0);
+          }
+
+          this.processedData.series = [tempArr];
+        })
+        .catch(error => console.log);
+    },
     getDataFromAPI() {
       fetch(
         `${this.$store.state.COMMON_INFRA_SERVER}history/getRegistrationHistory`
@@ -410,24 +408,32 @@ export default {
         .then(response => response.json())
         .then(result => {
           //console.log(result);
-          this.originalData = result.filter(
-            obj => obj.channelId == this.channelID
-          );
+          this.originalData = result;
           this.filteredData = [...this.originalData];
-          let dateData = this.groupWeek(this.originalData),
-            tempData = [];
-          console.log("groupWeek", dataData);
-          this.processedData = {
-            labels: [],
-            series: []
-          };
 
-          for (let i = 0; i < dataData.length; i++) {
-            this.processedData.labels.push(dataData[i]["timeStamp"]);
-            tempData.push(dataData[i]["count"]);
-          }
-
-          this.processedData.series = [[...tempData]];
+          this.$store.commit("updateUserStats", this.originalData);
+        })
+        .catch(error => console.log);
+    },
+    getTotalPageViews() {
+      fetch(`${this.$store.state.ANALYTICS_SERVER}analytics/countallviews`)
+        .then(response => response.json())
+        .then(result => {
+          console.log("result1", result);
+          this.totalpageviews = result;
+          //console.log("pbchart "+this.pbchart);
+          //this.fillData();
+        })
+        .catch(error => console.log);
+    },
+    getTotalFollows() {
+      fetch(`${this.$store.state.ANALYTICS_SERVER}analytics/countallfollows`)
+        .then(response => response.json())
+        .then(result => {
+          console.log("result1", result);
+          this.totalfollows = result;
+          //console.log("pbchart "+this.pbchart);
+          //this.fillData();
         })
         .catch(error => console.log);
     },
@@ -478,11 +484,28 @@ export default {
           this.fillData();
         })
         .catch(error => console.log);
+    },
+    getDayDifference(pastDate) {
+      let pastTime = new Date(pastDate);
+      let presentTime = new Date();
+      return Math.floor(
+        (presentTime.getTime() - pastTime.getTime()) / (1000 * 3600 * 24)
+      );
+    },
+    filter(time) {
+      //TODO: filter the list based time
+      this.filteredData = this.originalData.filter(obj => {
+        if (obj.channelId == this.channelID && this.getDayDifference(obj.timestamp) < time) return obj;
+      });
+      this.$store.commit("updateUserStats", this.filteredData);
     }
   },
-  beforeMount() {
+  mounted() {
+    this.setGraphData();
     this.getDataFromAPI();
     this.getTotalActiveUsers();
+    this.getTotalPageViews();
+    this.getTotalFollows();
     // this.getTotalActiveUsersInPb(),
     // this.getTotalActiveUsersInQuora(),
     // this.getTotalActiveUsersInQuiz(),
