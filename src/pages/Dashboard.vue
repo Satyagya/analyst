@@ -238,7 +238,7 @@ export default {
       totalActiveUsers2: 10,
       totalActiveUsers3: 10,
       totalActiveUsers4: 0,
-
+      datacollection: null,
       totalpageviews:0,
       totalfollows:0,
       processedData: {
@@ -267,7 +267,7 @@ export default {
             tension: 0
           }),
           low: 0,
-          high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+          high: 50, // biggest value + something for a better look
           chartPadding: {
             top: 0,
             right: 0,
@@ -287,7 +287,7 @@ export default {
             tension: 0
           }),
           low: 0,
-          high: 1000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+          high: 100, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
           chartPadding: {
             top: 0,
             right: 0,
@@ -492,7 +492,7 @@ export default {
         (presentTime.getTime() - pastTime.getTime()) / (1000 * 3600 * 24)
       );
     },
-    filter(time) {
+    filter() {
       //TODO: filter the list based time
       this.filteredData = this.originalData.filter(obj => {
         if (obj.channelId == this.channelID && this.getDayDifference(obj.timestamp) < time) return obj;
@@ -500,7 +500,7 @@ export default {
       this.$store.commit("updateUserStats", this.filteredData);
     }
   },
-  mounted() {
+  beforeMount() {
     this.setGraphData();
     this.getDataFromAPI();
     this.getTotalActiveUsers();
@@ -510,6 +510,9 @@ export default {
     // this.getTotalActiveUsersInQuora(),
     // this.getTotalActiveUsersInQuiz(),
     this.fillData();
+  },
+  mounted() {
+    this.setGraphData();
   }
 };
 </script>

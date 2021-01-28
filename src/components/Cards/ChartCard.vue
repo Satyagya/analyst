@@ -86,8 +86,21 @@ export default {
   mounted() {
     this.updateChartId();
     import("chartist").then(Chartist => {
+      //console.log("Chartist", Chartist);
       let ChartistLib = Chartist.default || Chartist;
       this.$nextTick(() => {
+        //console.log("Chartist", ChartistLib);
+        this.initChart(ChartistLib);
+      });
+    });
+  },
+  beforeUpdate(){
+    this.updateChartId();
+    import("chartist").then(Chartist => {
+      //console.log("Chartist", Chartist);
+      let ChartistLib = Chartist.default || Chartist;
+      this.$nextTick(() => {
+        //console.log("Chartist", ChartistLib);
         this.initChart(ChartistLib);
       });
     });

@@ -195,7 +195,7 @@ export default {
             tension: 0
           }),
           low: 0,
-          high: 60, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+          high: 200, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
           chartPadding: {
             top: 5,
             right: 0,

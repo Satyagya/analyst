@@ -210,6 +210,7 @@
 import { StatsCard, ChartCard, OrderedTable } from "@/components";
 import QuoraTable from "../components/Tables/QuoraTable.vue";
 
+
 export default {
   components: {
     StatsCard,
@@ -220,8 +221,8 @@ export default {
   data() {
     return {
       //idhr dekho
-      categoryName1: "dummy_data",
-      categoryName2: "dummy_data",
+      categoryName1: "some post",
+      categoryName2: "war",
       categoryName3: "dummy_data",
       likes1: 1,
       dislikes1: 1,
@@ -260,7 +261,7 @@ export default {
             tension: 0
           }),
           low: 0,
-          high: 60, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+          high: 500, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
           chartPadding: {
             top: 5,
             right: 0,
@@ -285,6 +286,24 @@ export default {
     };
   },
   methods: {
+    
+    setGraphData() {
+      fetch(`${this.$store.state.COMMON_INFRA_SERVER}history/getLoginHistory/`)
+        .then(response => response.json())
+        .then(result => {
+          let tempArr = result.filter(obj => obj.channelId == this.channelID);
+          let tempData = this.groupWeek(tempArr);
+          tempArr = [];
+          this.processedData.labels = [];
+          for (let i = 0; i < tempData.length; i++) {
+            this.processedData.labels.push(tempData[i]["timestamp"]);
+            tempArr.push(tempData[i]["count"] || 0);
+          }
+
+          this.processedData.series = [tempArr];
+        })
+        .catch(error => console.log);
+    },
     getMonday(d) {
       let day = d.getDay();
       let diff = d.getDate() - day + (day === 0 ? -6 : 1);
@@ -308,23 +327,7 @@ export default {
         return m;
       }, []);
     },
-    setGraphData() {
-      fetch(`${this.$store.state.COMMON_INFRA_SERVER}history/getLoginHistory/`)
-        .then(response => response.json())
-        .then(result => {
-          let tempArr = result.filter(obj => obj.channelId == this.channelID);
-          let tempData = this.groupWeek(tempArr);
-          tempArr = [];
-          this.processedData.labels = [];
-          for (let i = 0; i < tempData.length; i++) {
-            this.processedData.labels.push(tempData[i]["timestamp"]);
-            tempArr.push(tempData[i]["count"] || 0);
-          }
 
-          this.processedData.series = [tempArr];
-        })
-        .catch(error => console.log);
-    },
     getDataFromAPI() {
       fetch(
         `${this.$store.state.COMMON_INFRA_SERVER}history/getRegistrationHistory/`

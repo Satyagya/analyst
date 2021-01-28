@@ -8,7 +8,7 @@
           item.areaOfIntrests
         }}</md-table-cell>
         <md-table-cell md-label="Views">{{ item.views }}</md-table-cell>
-        <md-table-cell md-label="follows">{{ item.follows }}</md-table-cell>
+        <md-table-cell md-label="follows">{{ item.followers }}</md-table-cell>
       </md-table-row>
     </md-table>
   </div>
